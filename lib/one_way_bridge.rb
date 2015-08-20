@@ -1,3 +1,4 @@
+# Safety-net bridge controller between legacy and OpenFlow networks.
 class OneWayBridge < Trema::Controller
   def packet_in(datapath_id, message)
     out_port = { 1 => 2, 2 => 1 }.fetch(message.in_port)
@@ -6,7 +7,7 @@ class OneWayBridge < Trema::Controller
     add_drop_flow datapath_id, message.source_mac, out_port
   end
 
-  def flow_removed(datapath_id, messsage)
+  def flow_removed(datapath_id, message)
     delete_flow datapath_id, message.match.ether_source_address
   end
 
