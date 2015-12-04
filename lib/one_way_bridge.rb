@@ -1,4 +1,4 @@
-# Safety-net bridge controller between legacy and OpenFlow networks.
+# Safety-net controller bridging legacy and OpenFlow networks.
 class OneWayBridge < Trema::Controller
   def packet_in(datapath_id, message)
     out_port = { 1 => 2, 2 => 1 }.fetch(message.in_port)
