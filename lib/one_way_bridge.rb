@@ -8,7 +8,7 @@ class OneWayBridge < Trema::Controller
   end
 
   def flow_removed(datapath_id, message)
-    delete_flow datapath_id, message.match.ether_source_address
+    delete_flow datapath_id, message.match.source_mac_address
   end
 
   private
@@ -17,7 +17,7 @@ class OneWayBridge < Trema::Controller
     send_flow_mod_add(
       datapath_id,
       idle_timeout: 10 * 60,
-      match: Match.new(in_port: in_port, ether_source_address: source_mac),
+      match: Match.new(in_port: in_port, source_mac_address: source_mac),
       actions: SendOutPort.new(out_port)
     )
   end
@@ -26,7 +26,7 @@ class OneWayBridge < Trema::Controller
     send_flow_mod_add(
       datapath_id,
       idle_timeout: 10 * 60,
-      match: Match.new(in_port: in_port, ether_source_address: source_mac)
+      match: Match.new(in_port: in_port, source_mac_address: source_mac)
     )
   end
 
@@ -41,7 +41,7 @@ class OneWayBridge < Trema::Controller
   def delete_flow(datapath_id, source_mac)
     send_flow_mod_delete(
       datapath_id,
-      match: Match.new(ether_source_address: source_mac)
+      match: Match.new(source_mac_address: source_mac)
     )
   end
 end
